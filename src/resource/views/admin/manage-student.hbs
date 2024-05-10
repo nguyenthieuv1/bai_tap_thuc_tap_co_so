@@ -1,0 +1,192 @@
+<div class="main p-3" id="student-content">
+    <h2 class="h2" id="class-name"></h2>
+    <h3 class="h4" id="gvcn-name"></h3>
+    <h3 class="title-student">Danh sách học sinh</h3>
+
+    <div class="row">
+        <div class="col-md-6 mb-4 border boder-end">
+            <div class=" row ">
+                <div class="col-md-8">
+                    <label for="nienkhoa" class="form-label">Chọn niên khóa để xem danh sách lớp tương ứng</label>
+                    <select class="form-select btn btn-warning" id="nienkhoa">
+                        {{#nienkhoa}}
+                        <option value="{{this.idnk}}">{{this.ten}}</option>
+                        {{/nienkhoa}}
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex ">
+                    <button class="btn btn-primary text-center align-self-end " id="search-nienkhoa"><i
+                            class="lni lni-search-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row menu">
+                <div class="col-md-8">
+                    <label for="lop" class="form-label">Chọn lớp</label>
+                    <select class="form-select btn btn-warning" id="lop">
+                        
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex">
+                    <button class="btn btn-primary text-center align-self-end" id="search"><i
+                            class="lni lni-search-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center justify-content-center mb-4 border boder-start">
+            <a href="/admin/select-nk" class="btn btn-primary">thêm học sinh mới</a>
+        </div>
+    </div>
+
+
+   
+    <table class="table table-bordered border-2 text-center">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">Mã học sinh</th>
+                <th scope="col">Họ tên</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">địa chỉ</th>
+                <th scope="col">username</th>
+                <th scope="col">password</th>
+                <th scope="col" colspan="2">chức năng</th>
+            </tr>
+        </thead>
+        <tbody id="table-class">
+            {{!-- {{#lophoc}}
+            <tr>
+                <th scope="row">2</th>
+                <td>{{this.idhs}}</td>
+                <td>{{this.Name}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.gioitinh}}</td>
+                <td>{{this.diachi}}</td>
+                <td>{{this.username}}</td>
+                <td>{{this.password}}</td>
+                <td><a class="btn btn-warning" href="/admin/update-student/{{lophoc.idhs}}">cập nhật</a></td>
+                <td><a class="btn btn-danger">xóa</a></td>
+
+            </tr>
+            {{/lophoc}} --}}
+
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa học sinh này</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn xóa học sinh này
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete">Xóa bỏ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    const exampleModal = document.getElementById('exampleModal')
+    if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const buttonDel = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const id = buttonDel.getAttribute('data-id')
+            const form = document.getElementById('form-del')
+            $('#confirm-delete').click(function () {
+                $.ajax({
+                    url: `/admin/delete-student/${id}`,
+                    type: 'DELETE',
+                    data: {}
+                })
+                    .then(data => {
+                        alert(data);
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Lỗi xóa: ', error);
+                    });
+            });
+
+        })
+    }
+    $(document).ready(function () {
+        $('#search-nienkhoa').click(function () {
+            var idnk = $('#nienkhoa').val()            
+         
+            $.ajax({
+                url: `/admin/admin-student/${idnk}`,
+                type: 'POST',
+                data: {                   
+                }
+            })
+                .then(data0 => {
+                    console.log(data0)
+                    var lophoc = document.getElementById('lop')
+                    var lop_content = data0.map(lop => {
+                        return `<option value="${lop.idlop}">${lop.ten}</option>`
+                    })
+                    lophoc.innerHTML = lop_content.join('')
+                    $('#search').click(function () {
+                        var cnt = 0
+                        $.ajax({
+                            url: "/admin/admin-student",
+                            type: 'POST',
+                            data: {
+                                nienkhoa: $('#nienkhoa').val(),
+                                lop: $('#lop').val()
+                            }
+                        })
+                            .then(data => {
+                                document.getElementById('class-name').innerHTML = `Lớp: ${data.lophoc[0].ten} - Niên khóa: ${data.lophoc[0].nienkhoa}`
+                                document.getElementById('gvcn-name').innerHTML = `Giáo viên chủ nhiệm: ${data.gvcn.gvcn}`
+                                var table_class = document.getElementById('table-class')
+                                var table_content = data.lophoc.map(student => {
+                                    cnt++
+                                    //console.log(student)
+                                    return `<tr>
+                          <th scope="row">${cnt}</th>
+                          <td>${student.idhs}</td>
+                          <td>${student.name}</td>
+                          <td>${student.dob.substring(0, 10)}</td>
+                          <td>${student.gioitinh}</td>
+                          <td>${student.diachi}</td>
+                          <td>${student.username}</td>
+                          <td>${student.password}</td>
+                          <td><a class="btn btn-warning" href="/admin/update-student/${student.idhs}">cập nhật</a></td>
+                          <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-id="${student.idhs}" id="deleteBtn">
+                        xóa
+                    </button>
+                </td>
+                          </tr>`
+                                })
+                                table_class.innerHTML = table_content.join('')
+
+                            })
+                            .catch(err => {
+                                console.log('loi 101' + err)
+                            })
+                    })
+
+                })
+                .catch(err => {
+                    console.log('loi 101' + err)
+                })
+        })
+
+    })
+</script>

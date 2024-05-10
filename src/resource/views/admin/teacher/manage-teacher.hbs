@@ -1,0 +1,96 @@
+<div class="main p-3" id="student-content">
+    <h2 class="h2" id="class-name"></h2>
+    <h3 class="h4" id="gvcn-name"></h3>
+    <h3 class="title-student">Danh sách giáo viên</h3>
+   
+    <a href="/admin/add-teacher" class="btn btn-primary mb-2">thêm giáo viên mới</a>
+    <table class="table table-bordered border-2 text-center">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">mã giáo viên</th>
+                <th scope="col">họ tên</th>
+                <th scope="col">ngày sinh</th>
+                <th scope="col">giới tính</th>
+                <th scope="col">địa chỉ</th>
+                <th scope="col">bộ môn</th>
+                <th scope="col">số năm công tác</th>
+                <th scope="col">trạng thái</th>
+                <th scope="col">username</th>
+                <th scope="col">password</th>
+                <th scope="col" colspan="2">chức năng</th>
+            </tr>
+        </thead>
+        <tbody id="table-class">
+            {{#giaovien}}
+            <tr>
+                <th scope="row">{{sum 1 @index}}</th>
+                <td>{{this.idGV}}</td>
+                <td>{{this.ten}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.gioitinh}}</td>
+                <td>{{this.diachi}}</td>
+                <td>{{this.bomon}}</td>
+                <td>{{this.namCT}}</td>
+                <td>{{this.trangthai}}</td>
+                <td>{{this.username}}</td>
+                <td>{{this.password}}</td>
+                <td><a class="btn btn-warning" href="/admin/update-teacher/{{this.idGV}}">cập nhật</a></td>
+                <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-id="{{this.idGV}}" id="deleteBtn">
+                        xóa
+                    </button>
+                </td>
+            </tr>
+            {{/giaovien}}
+
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa giáo viên này</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có muốn xóa giáo viên này
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+   
+    const exampleModal = document.getElementById('exampleModal')
+    if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const buttonDel = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const id = buttonDel.getAttribute('data-id')
+            const form = document.getElementById('form-del')          
+            $('#confirm-delete').click(function () {
+                $.ajax({
+                    url: `/admin/delete-teacher/${id}`,
+                    type: 'DELETE',
+                    data: {}
+                })
+                    .then(data => {
+                        alert(data);
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Lỗi xóa: ', error);
+                    });
+            });
+
+        })
+    }
+</script>

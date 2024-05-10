@@ -1,0 +1,44 @@
+<div class="container">
+    <h2 class="h2 text-center mt-4">cập nhật thông tin học sinh</h2>    
+    <form action="/admin/update-student/{{student.idhs}}" method="post">
+        <div class="mb-3">
+            <label for="ten" class="form-label">Họ tên</label>
+            <input type="text" class="form-control" id="ten" name="ten" value="{{student.name}}">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">Ngày sinh</label>
+            <input type="date" class="form-control" id="dob" name="dob" value="{{student.dob}}">
+        </div>
+        <div class="mb-3">
+            <label for="gioitinh" class="form-label">Giới tính</label>
+             <select class="form-select" id="gioitinh" name="gioitinh" > 
+                <option selected>{{student.gioitinh}}</option>
+               <option>Nam</option>   
+               <option>Nữ</option>           
+               <option>Khác</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="diachi" class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control" id="diachi" name="diachi" value="{{student.diachi}}">
+        </div>        
+        <div class="mb-3">
+            <label for="lop" class="form-label">Lớp</label>
+            <select class="form-select" id="lop" name="lop"> 
+                <option selected value="{{student.idlop}}">{{student.tenlop}}</option>
+               {{#lop}}
+                     <option this.idlop>{{this.ten}}</option> 
+               {{/lop}}               
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="HS1" class="form-label">username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{student.username}}">
+        </div>
+        <div class="mb-3">
+            <label for="HS1" class="form-label">password</label>
+            <input type="text" class="form-control" id="password" name="password" value="{{student.password}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

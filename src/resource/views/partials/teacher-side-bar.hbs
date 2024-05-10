@@ -1,0 +1,73 @@
+<aside id="sidebar">
+    <div class="d-flex">
+        <button class="toggle-btn" type="button">
+            <i class="lni lni-grid-alt"></i>
+        </button>
+        <div class="sidebar-logo">
+            <a href="#">School</a>
+        </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-item">
+            <a href="/teacher" class="sidebar-link " id="profile-bar">
+                <i class="lni lni-user"></i>
+                <span>Hồ sơ</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/teacher/teacher-student" class="sidebar-link" id="student-bar">
+                <i class="lni lni-users"></i>
+                <span>Học sinh</span>
+            </a>
+        </li>        
+
+         <li class="sidebar-item">
+            <a href="/teacher/teacher-score" class="sidebar-link" id="score-servey-bar">
+                <i class="lni lni-graduation"></i>
+                <span>Điểm khảo sát</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/teacher/thoi-khoa-bieu-gv" class="sidebar-link" id="thoi-khoa-bieu-bar">
+                <i class="lni lni-layout"></i>
+                <span>Thời khóa biểu</span>
+            </a>
+        </li>
+        
+        <li class="sidebar-item">
+            <a href="/teacher/thongbao" class="sidebar-link" id="notification-bar">
+                <i class="lni lni-popup"></i>
+                <span>Thông báo</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/teacher/teacher-setting" class="sidebar-link" id="setting-bar">
+                <i class="lni lni-cog"></i>
+                <span>Cài đặt</span>
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="#"  class="sidebar-link">
+            <img src="/img/user.png" class="img-user">
+            <!-- <i class="lni lni-exit"></i> -->
+            <div class="infor-user">
+                <p class="infor-user-name">{{user.ten}}</p>
+                <p class="infor-user-position">Giáo viên</p>
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-footer">
+        <a href="/login/logout" class="sidebar-link">
+            <i class="lni lni-exit"></i>
+            <span>Đăng xuất</span>
+        </a>
+    </div>
+</aside>
+<script>
+    var func = `{{func}}`        
+    var tmp = document.getElementById(func)
+    if(tmp !== null) {
+       tmp.classList.add('active')        
+    }    
+</script>

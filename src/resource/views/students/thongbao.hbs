@@ -1,0 +1,17 @@
+<div class="main p-3" id="notification-content">
+    <h1 class="h1">thông báo</h1>
+    
+    <div class="notification-content-items">
+        {{#thongbao}}
+        <div class="main-notify d-flex">
+            <div class="content  w-100">
+                <span>{{this.ngaytao}}</span>
+                <div class="alert alert-success">
+                    {{this.noidung}}
+                </div>
+            </div>
+            
+        </div>
+        {{/thongbao}}
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="container">
+    <h2 class="h2 text-center mt-4">Cập nhật thông tin giáo viên</h2>
+    <form action="/admin/update-teacher/{{giaovien.idGV}}" method="post">
+        <div class="mb-3">
+            <label for="ten" class="form-label">Họ tên</label>
+            <input type="text" class="form-control" id="ten" name="ten" value="{{giaovien.ten}}">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">Ngày sinh</label>
+            <input type="date" class="form-control" id="dob" name="dob" value="{{giaovien.dob}}">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control" id="dob" name="sdt" value="{{giaovien.sdt}}">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">email</label>
+            <input type="text" class="form-control" id="dob" name="email" value="{{giaovien.email}}">
+        </div>
+        <div class="mb-3">
+            <label for="gioitinh" class="form-label">Giới tính</label>
+            <select class="form-select" id="gioitinh" name="gioitinh">
+                <option>{{giaovien.gioitinh}}</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+                <option>Khác</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="diachi" class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control" id="diachi" name="diachi" value="{{giaovien.diachi}}">
+        </div>
+        <div class="mb-3">
+            <label for="diachi" class="form-label">Bộ môn</label>
+            <input type="text" class="form-control" id="diachi" name="bomon" value="{{giaovien.bomon}}">
+        </div>
+        <div class="mb-3">
+            <label for="namCT" class="form-label">Số năm công tác</label>
+            <input type="text" class="form-control" id="namCT" name="namCT" value="{{giaovien.namCT}}">
+        </div>
+        <div class="mb-3">
+            <label for="namCT" class="form-label">Trạng thái</label>
+            <input type="text" class="form-control" id="namCT" name="trangthai" value="{{giaovien.trangthai}}">
+        </div>
+        <div class="mb-3">
+            <label for="HS1" class="form-label">username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{giaovien.username}}">
+        </div>
+        <div class="mb-3">
+            <label for="HS1" class="form-label">password</label>
+            <input type="text" class="form-control" id="password" name="password" value="{{giaovien.password}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,43 @@
+<div class="main p-3" id="notification-content">
+    <h1 class="h1">thông báo</h1>
+    <form action="/admin/add-thongbao" method="post">
+        <label for="notify" class="form-label">tạo thông báo mới</label>
+        <textarea class="form-control" id="notify" rows="5" placeholder="viết thông báo ở đây" name="content"></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Gửi</button>
+    </form>
+
+    <div class="notification-content-items">
+        {{#thongbao}}
+        <div class="main-notify d-flex">
+            <div class="content  w-100">
+                <span>{{this.ngaytao}}</span>
+                <div class="alert alert-success">
+                    {{this.noidung}}
+                </div>
+            </div>
+            <button type="button" class="btn-close align-self-center" data-bs-dismiss="alert" id="delete"
+                data-id="{{this.idtb}}"></button>
+        </div>
+        {{/thongbao}}
+    </div>
+</div>
+<script>
+    const element = document.querySelector('#delete');
+    const id = element.getAttribute('data-id');
+    $('#delete').click(function () {
+        console.log('click');
+        $.ajax({
+            url: `/admin/delete-thongbao/${id}`,
+            type: 'DELETE',
+            data: {}
+        })
+            .then(data => {
+                alert(data);
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Lỗi xóa: ', error);
+            });
+    });
+
+</script>

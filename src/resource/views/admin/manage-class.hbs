@@ -1,0 +1,119 @@
+<div class="container-fluid" id="classroom">
+    <h2 class="h2 text-center mt-4">Quản lý lớp học</h2>
+    <div class=" mb-3">
+        <div class="select-btn">
+            <label for="nienkhoa" class="form-label">Chọn niên khóa để xem</label>
+            <select class="form-select btn btn-warning" id="nienkhoa">
+                {{#nienkhoa}}
+                <option>{{this.ten}}</option>
+                {{/nienkhoa}}
+            </select>
+        </div>
+        <div class="search-btn btn btn-primary text-center" id="search"><i class="lni lni-search-alt icon-btn"></i>
+        </div>
+
+    </div>
+    <a href="/admin/selectNk-class" class="btn btn-primary mb-2">thêm lớp học mới</a>
+    <a href="/admin/add-nienkhoa" class="btn btn-primary mb-2">thêm niên khóa mới</a>
+    <table class="table table-bordered border-2 text-center">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">mã lớp</th>
+                <th scope="col">tên lớp</th>
+                <th scope="col">giáo viên chủ nghiệm</th>
+                <th scope="col">niên khóa</th>
+                <th scope="col" colspan="2">chức năng</th>
+            </tr>
+        </thead>
+        <tbody id="table-class">
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa lớp học này</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có muốn xóa lớp học này
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        const exampleModal = document.getElementById('exampleModal')
+        if (exampleModal) {
+            exampleModal.addEventListener('show.bs.modal', event => {
+                // Button that triggered the modal
+                const buttonDel = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                const id = buttonDel.getAttribute('data-id')
+                const form = document.getElementById('form-del')
+                $('#confirm-delete').click(function () {
+                    $.ajax({
+                        url: `/admin/delete-classroom/${id}`,
+                        type: 'DELETE',
+                        data: {}
+                    })
+                        .then(data => {
+                            alert(data);
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Lỗi xóa: ', error);
+                        });
+                });
+
+            })
+        }
+        $('#search').click(function () {
+            var cnt = 0
+            $.ajax({
+                url: "/admin/admin-classroom",
+                type: 'POST',
+                data: {
+                    nienkhoa: $('#nienkhoa').val()
+                }
+            })
+                .then(data => {
+                    //console.log(data)
+                    var table = document.getElementById('table-class')
+                    var tableContent = data.map(item => {
+                        cnt++
+                        return `<tr>
+                          <th scope="row">${cnt}</th>
+                          <td>${item.idlop}</td>
+                          <td>${item.lop}</td>                          
+                          <td>${item.gvcn}</td>                          
+                          <td>${item.nienkhoa}</td>                         
+                          <td><a class="btn btn-warning" href="/admin/update-classroom/${item.idlop}">cập nhật</a></td>
+                         
+                           <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-id="${item.idlop}" id="deleteBtn">
+                        xóa
+                    </button>
+                </td>
+                   
+                          </tr>`
+                    })
+                    table.innerHTML = tableContent.join('')
+                })
+                .catch(err => {
+                    console.log('loi 101' + err)
+                })
+        })
+    })
+</script>

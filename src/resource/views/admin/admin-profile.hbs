@@ -1,0 +1,55 @@
+<div class="main p-3" id="profile-content">
+    <div class="text-center">
+        <h1 class="h1" id="title-profile">Thông tin chung</h1>
+        <div id="user-profile">
+            <div id="card-watable-warningr-img">
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/anh3.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{user.ten}}</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="user-watable-warningr" class="col-sm-8">
+                <table class="table table-striped">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Mã giáo viên</th>
+                            <td>{{user.idGV}}</td>
+                        </tr>
+                        <tr>
+                            <th>Họ và tên</th>
+                            <td>{{user.ten}}</td>
+                        </tr>
+                        <tr>
+                            <th>Ngày sinh</th>
+                            <td>{{user.dob}}</td>
+                        </tr>
+                        <tr>
+                            <th>số điện thoại</th>
+                            <td>{{user.sdt}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{user.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>địa chỉ</th>
+                            <td>{{user.diachi}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Bộ môn</th>
+                            <td>{{user.bomon}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

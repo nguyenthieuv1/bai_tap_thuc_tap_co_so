@@ -1,0 +1,95 @@
+<aside id="sidebar">
+    <div class="d-flex">
+        <button class="toggle-btn" type="button">
+            <i class="lni lni-grid-alt"></i>
+        </button>
+        <div class="sidebar-logo">
+            <a href="#">School</a>
+        </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-item">
+            <a href="/student" class="sidebar-link " id="profile-bar">
+                <i class="lni lni-user"></i>
+                <span>Hồ sơ</span>
+            </a>
+        </li>
+        
+         <li class="sidebar-item">
+            <a href="/student/classroom" class="sidebar-link" id="classroom-bar">
+                <i class="lni lni-layers"></i>
+                <span>Lớp học</span>
+            </a>
+        </li>
+       
+       
+
+         <li class="sidebar-item">
+            <a href="/student/diem-khao-sat" class="sidebar-link" id="score-servey-bar">
+                <i class="lni lni-graduation"></i>
+                <span>Điểm khảo sát</span>
+            </a>
+        </li>
+{{!-- 
+        <li class="sidebar-item">
+            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth"
+                aria-expanded="false" aria-controls="auth" id="score-servey">
+                <i class="lni lni-graduation"></i>
+                <span>Điểm số</span>
+            </a>
+            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="/admin/admin-score" class="sidebar-link" id="score-servey-bar">Điểm khảo sát</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" id="score-component-bar">Điểm thành phần</a>
+                </li>
+            </ul>
+        </li> --}}
+
+        <li class="sidebar-item">
+            <a href="/student/thoi-khoa-bieu-hoc-sinh" class="sidebar-link" id="tkb-bar">
+                <i class="lni lni-layout"></i>
+                <span>Thời khóa biểu</span>
+            </a>
+        </li>
+
+      
+
+        <li class="sidebar-item">
+            <a href="/student/thongbao" class="sidebar-link" id="notification-bar">
+                <i class="lni lni-popup"></i>
+                <span>Thông báo</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="/student/student-setting" class="sidebar-link" id="setting-bar">
+                <i class="lni lni-cog"></i>
+                <span>Cài đặt</span>
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="#"  class="sidebar-link">
+            <img src="/img/user.png" class="img-user">
+            <!-- <i class="lni lni-exit"></i> -->
+            <div class="infor-user">
+                <p class="infor-user-name">{{username}}</p>
+                <p class="infor-user-position">Học sinh</p>
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-footer">
+        <a href="/login/logout" class="sidebar-link">
+            <i class="lni lni-exit"></i>
+            <span>Đăng xuất</span>
+        </a>
+    </div>
+</aside>
+<script>
+    var func = `{{func}}`        
+    var tmp = document.getElementById(func)
+    if(tmp !== null) {
+       tmp.classList.add('active')        
+    }    
+</script>

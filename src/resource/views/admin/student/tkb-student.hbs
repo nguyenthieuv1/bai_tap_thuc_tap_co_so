@@ -1,0 +1,145 @@
+<div class="main p-3" id="main-schedule-content ">
+    <div class="col-md-4 d-flex">
+        <div class="select-lop">
+            <label for="nienkhoa" class="form-label"><b>tùy chọn xem thời khóa biểu của Lớp</b></label>
+            <select class="form-select" id="lop">
+                {{#lop}}
+                <option value="{{this.idlop}}">{{this.ten}}</option>
+                {{/lop}}
+            </select>
+        </div>
+        <button class="btn btn-primary mt-4 ms-4 align-items-end" id="select-lop">chọn</button>
+    </div>
+
+    <h2 class="h2 text-center">thời khóa biểu học sinh</h2>
+    <div id="update-tkb">
+        {{!-- <a class="btn btn-primary mb-2" href="/admin/add-tkb-gv/">thêm thời khóa biểu dạy</a> --}}
+    </div>
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">Thứ</th>
+                <th scope="col">Tiết 1</th>
+                <th scope="col">Tiết 2</th>
+                <th scope="col">Tiết 3</th>
+                <th scope="col">Tiết 4</th>
+                <th scope="col">Tiết 5</th>
+                <th scope="col">Tiết 6</th>
+                <th scope="col">Tiết 7</th>
+                <th scope="col" colspan="2">Chức năng</th>
+            </tr>
+        </thead>
+        <tbody id="table-tkb">
+
+        </tbody>
+    </table>
+
+    <!-- <h1 class="h1">thời khóa biểu dạy thêm</h1> -->
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa thời khóa biểu này</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có muốn xóa thời khóa biểu này
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $('#select-lop').click(function () {
+
+            var idLop = $('#lop').val()
+            $.ajax({
+                url: `/admin/tkb-student/${idLop}`,
+                type: 'POST',
+                data: {                   
+                }
+            })
+                .then(data => {
+                    //console.log(data)
+
+                    let html = data.map(item => {
+                        for (key in item) {
+                            if (item[key] == null) {
+                                item[key] = ''
+                            }
+                            //console.log(`${key}: ${item[key]}`)
+
+                        }
+                        return `<tr>
+                <th scope="row">${item.thu}</th>
+                <td>${item.tiet1}</td>
+                <td>${item.tiet2}</td>
+                <td>${item.tiet3}</td>
+                <td>${item.tiet4}</td>
+                <td>${item.tiet5}</td>
+                <td>${item.ct1}</td>
+                <td>${item.ct2}</td>
+                <td><a class="btn btn-warning" href="/admin/update-tkb-student/${item.idtkb}">Sửa</a></td>
+                 <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-id="${item.idtkb}" id="deleteBtn">
+                        xóa
+                    </button>
+                </td>
+            </tr>`
+                    })
+                    var table_tkb = document.getElementById('table-tkb')
+                    table_tkb.innerHTML = html.join('')
+                    //console.log(html.join(''))
+                    var update_tkb = document.getElementById('update-tkb')
+                    update_tkb.innerHTML = `<a class="btn btn-primary mb-2" href="/admin/add-tkb-student/${idLop}">thêm thời khóa biểu</a>`
+
+                })
+                .catch(err => {
+                    console.log('loi 101' + err)
+                })
+        })
+
+
+        const exampleModal = document.getElementById('exampleModal')
+        if (exampleModal) {
+            exampleModal.addEventListener('show.bs.modal', event => {
+                // Button that triggered the modal
+                const buttonDel = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                const id = buttonDel.getAttribute('data-id')
+                const form = document.getElementById('form-del')
+                
+                $('#confirm-delete').click(function () {
+                    
+                    $.ajax({
+                        url: `/admin/delete-tkb-student/${id}`,
+                        type: 'DELETE',
+                        data: {}
+                    })
+                        .then(data => {
+                            alert(data);
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Lỗi xóa: ', error);
+                        });
+                });
+
+            })
+        }
+    })
+
+</script>

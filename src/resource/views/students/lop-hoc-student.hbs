@@ -1,0 +1,34 @@
+<div class="main p-3" id="student-content">
+    <h2 class="h2" id="class-name">Lớp: {{lop}}</h2>
+    <h3 class="h4" id="gvcn-name">Giáo viên chủ nhiệm: {{gvcn}}</h3>
+    <h3 class="title-student">Danh sách học sinh</h3>
+
+
+    <table class="table table-bordered border-2 text-center">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">Mã học sinh</th>
+                <th scope="col">Họ tên</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">địa chỉ</th>                           
+            </tr>
+        </thead>
+        <tbody id="table-class">
+            {{#hocsinh}}
+            <tr>
+                <th scope="row">{{sum 1 @index}}</th>
+                <td>{{this.idhs}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.gioitinh}}</td>
+                <td>{{this.diachi}}</td>                               
+            </tr>
+            {{/hocsinh}}
+
+        </tbody>
+    </table>
+
+  
+

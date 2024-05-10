@@ -1,0 +1,21 @@
+<div class="container">
+    <h2 class="h2 text-center mt-4">Thêm lớp học mới</h2>
+    <h3 class="h4 text-center ">Niên khóa: {{nienkhoa}}</h3>
+    <form action="/admin/add-classroom/{{nienkhoa}}" method="post">
+        <div class="mb-3">
+            <label for="ten" class="form-label">tên lớp</label>
+            <input type="text" class="form-control" id="ten" name="ten">
+        </div>        
+        
+          
+        <div class="mb-3">
+            <label for="lop" class="form-label">giáo viên chủ nhiệm</label>
+            <select class="form-select" id="lop" name="idGV"> 
+               {{#giaovien}}
+                     <option value="{{this.idGV}}">{{this.ten}}</option> 
+               {{/giaovien}}               
+            </select>
+        </div>       
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

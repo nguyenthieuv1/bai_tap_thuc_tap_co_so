@@ -1,0 +1,54 @@
+<div class="main p-3" id="setting-content">
+    <h1 class="h1">Setting</h1>
+    <div class="container">
+        <h4 class="h3">Đổi mật khẩu đăng nhập</h4>
+
+        <div class="mb-3">
+            <label for="old-password" class="form-label">Old password:</label>
+            <input type="password" class="form-control" id="old-password" placeholder="mật khẩu cũ" name="old-password">
+        </div>
+
+        <div class="mb-3">
+            <label for="new-password" class="form-label">New password:</label>
+            <input type="password" class="form-control" id="new-password" placeholder="mật khẩu mới"
+                name="new-password">
+        </div>
+
+        <div class="mb-3">
+            <label for="confirm-password" class="form-label">Confirm new password:</label>
+            <input type="password" class="form-control" id="confirm-password" placeholder="xác nhận mật khẩu mới"
+                name="confirm-password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="delete">xác nhận</button>
+
+    </div>
+
+</div>
+<script>
+    $('#delete').click(function () {
+        console.log('click');
+        var confirm_password = $('#confirm-password').val();
+        var new_password = $('#new-password').val();
+        if (confirm_password != new_password) {
+            alert('Mật khẩu xác nhận không trùng khớp');
+            return;
+        }
+        else {
+            $.ajax({
+                url: `/student/student-setting`,
+                type: 'post',
+                data: {
+                    oldPassword: $('#old-password').val(),
+                    newPassword: $('#new-password').val(),
+                }
+            })
+                .then(data => {
+                    alert(data);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Lỗi xóa: ', error);
+                });
+        }       
+    });
+</script>

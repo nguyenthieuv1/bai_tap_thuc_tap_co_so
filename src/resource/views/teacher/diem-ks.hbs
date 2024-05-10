@@ -1,0 +1,185 @@
+<div class="main p-3" id="student-content">
+    <h2 class="h2" id="class-name"></h2>
+    <h3 class="h4" id="gvcn-name"></h3>
+    <h3 class="title-student">Quản lý điểm khảo sát học sinh</h3>
+
+    <div class="row">
+        <div class="col-md-6 mb-4 border boder-end">
+            <div class=" row ">
+                <div class="col-md-8">
+                    <label for="nienkhoa" class="form-label">Chọn niên khóa</label>
+                    <select class="form-select btn btn-warning" id="nienkhoa">
+                        {{#nienkhoa}}
+                        <option value="{{this.idnk}}">{{this.ten}}</option>
+                        {{/nienkhoa}}
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex ">
+                    <button class="btn btn-primary text-center align-self-end " id="search-nienkhoa">chọn</i>
+                    </button>
+                </div>
+            </div>
+            <div class="row menu">
+                <div class="col-md-8">
+                    <label for="lop" class="form-label">chọn Đợt thi</label>
+                    <select class="form-select btn btn-warning" id="dotthi">
+                        {{!-- <option value="KA001">A01</option> --}}
+                    </select>
+                </div>
+                {{!-- <div class="col-md-1 d-flex ">
+                    <button class="btn btn-primary text-center align-self-end " id="search-dotthi">chọn</i>
+                    </button>
+                </div> --}}
+                <div class="col-md-8">
+                    <label for="khoithi" class="form-label">chọn khối thi</label>
+                    <select class="form-select btn btn-warning" id="khoithi">
+                        <option value="KA001">A01</option>
+                        <option value="KA000">A00</option>
+                        <option value="KD000">D00</option>
+                        <option value="KB000">B00</option>
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button class="btn btn-primary text-center" id="search-khoithi"><i class="lni lni-search-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+
+
+    <table class="table table-bordered border-2 text-center">
+        <thead >
+            <tr class="table-dark" id="table-header">
+                {{!-- <th scope="col">#</th>
+                <th scope="col">Mã học sinh</th>
+                <th scope="col">Họ tên</th>
+                <th scope="col">môn1</th>
+                <th scope="col">môn2</th>
+                <th scope="col">môn3</th>
+                <th scope="col">tổng điểm</th>
+                <th scope="col">xếp hạng</th> --}}
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            {{!-- {{#lophoc}}
+            <tr>
+                <th scope="row">2</th>
+                <td>{{this.idhs}}</td>
+                <td>{{this.Name}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.gioitinh}}</td>
+                <td>{{this.diachi}}</td>
+                <td>{{this.username}}</td>
+                <td>{{this.password}}</td>
+                <td><a class="btn btn-warning" href="/admin/update-student/{{lophoc.idhs}}">cập nhật</a></td>
+                <td><a class="btn btn-danger">xóa</a></td>
+
+            </tr>
+            {{/lophoc}} --}}
+
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa học sinh này</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn xóa học sinh này
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete">Xóa bỏ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+  
+    $(document).ready(function () {
+        $('#search-nienkhoa').click(function () {
+            var idnk = $('#nienkhoa').val()
+
+            $.ajax({
+                url: `/teacher/teacher-score/${idnk}`,
+                type: 'POST',
+                data: {
+                }
+            })
+                .then(data0 => {
+
+                    var dotthi = document.getElementById('dotthi')
+                    var dotthi_content = data0.map(dotthi => {
+                        return `<option value="${dotthi.ten}">${dotthi.ten}</option>`
+                    })
+                    dotthi.innerHTML = dotthi_content.join('')
+                    $('#search-khoithi').click(function () {
+                        var cnt = 0
+                        $.ajax({
+                            url: "/teacher/teacher-score",
+                            type: 'POST',
+                            data: {
+                                idnk: $('#nienkhoa').val(),
+                                tendotks: $('#dotthi').val(),
+                                idkhoithi: $('#khoithi').val()
+                            }
+                        })
+                            .then(data => {
+                                console.log(data)
+                                var table_header = document.getElementById('table-header')
+                                var table_header_content =`
+                                                <th scope="col">#</th>
+                                                <th scope="col">Mã học sinh</th>
+                                                <th scope="col">Họ tên</th>
+                                                <th scope="col">ngày sinh</th>
+                                                <th scope="col">${data[0].mon1}</th>
+                                                <th scope="col">${data[0].mon2}</th>
+                                                <th scope="col">${data[0].mon3}</th>
+                                                <th scope="col">tổng điểm</th>
+                                                <th scope="col">xếp hạng</th> 
+                                                `                               
+                                table_header.innerHTML = table_header_content
+
+
+
+                                var table_body = document.getElementById('table-body')
+                                var table_body_content = data.map(student => {
+                                    cnt++
+                                    return `<tr>
+                                <th scope="row">${cnt}</th>
+                                <td>${student.idhs}</td>
+                                <td>${student.name}</td>
+                                <td>${student.dob}</td>
+                                <td>${student.diem1}</td>
+                                <td>${student.diem2}</td>
+                                <td>${student.diem3}</td>
+                                <td>${student.tongdiem}</td>
+                                <td>${student.xephang}</td>                          
+                                
+                          </tr>`
+                                })
+                                table_body.innerHTML = table_body_content.join('')
+
+                            })
+                            .catch(err => {
+                                console.log('loi 101' + err)
+                            })
+                    })
+
+                })
+                .catch(err => {
+                    console.log('loi 101' + err)
+                })
+        })
+
+    })
+</script>

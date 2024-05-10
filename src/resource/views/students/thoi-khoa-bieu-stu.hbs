@@ -1,0 +1,41 @@
+<div class="main p-3" id="main-schedule-content ">
+
+    <h2 class="h2 text-center">thời khóa biểu lớp {{lop}}</h2>
+    <div id="update-tkb">
+        {{!-- <a class="btn btn-primary mb-2" href="/admin/add-tkb-gv/">thêm thời khóa biểu dạy</a> --}}
+    </div>
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">Thứ</th>
+                <th scope="col">Tiết 1</th>
+                <th scope="col">Tiết 2</th>
+                <th scope="col">Tiết 3</th>
+                <th scope="col">Tiết 4</th>
+                <th scope="col">Tiết 5</th>
+                <th scope="col">Tiết 6</th>
+                <th scope="col">Tiết 7</th>
+                
+            </tr>
+        </thead>
+        <tbody id="table-tkb">
+            {{#tkb}}
+            <tr>
+                <th scope="row">{{this.thu}}</th>
+                <td>{{this.tiet1}}</td>
+                <td>{{this.tiet2}}</td>
+                <td>{{this.tiet3}}</td>
+                <td>{{this.tiet4}}</td>
+                <td>{{this.tiet5}}</td>
+                <td>{{this.ct1}}</td>
+                <td>{{this.ct2}}</td>                
+            </tr>
+            {{/tkb}}
+        </tbody>
+    </table>
+
+    <!-- <h1 class="h1">thời khóa biểu dạy thêm</h1> -->
+
+</div>
+
+

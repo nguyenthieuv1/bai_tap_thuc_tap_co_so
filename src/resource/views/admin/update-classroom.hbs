@@ -1,0 +1,30 @@
+<div class="container">
+    <h2 class="h2 text-center mt-4">cập nhật thông tin lớp học</h2>
+    <form action="/admin/update-classroom/{{lop.idlop}}" method="post">
+        <div class="mb-3">
+            <label for="ten" class="form-label">tên lớp</label>
+            <input type="text" class="form-control" id="ten" name="tenlop" value="{{lop.tenlop}}">
+        </div>
+
+
+        <div class="mb-3">
+            <label for="lop" class="form-label">giáo viên chủ nhiệm</label>
+            <select class="form-select" id="lop" name="idGV">
+                <option value="{{lop.idGV}}">{{lop.gvcn}}</option>
+                {{#giaovien}}
+                <option value="{{this.idGV}}">{{this.ten}}</option>
+                {{/giaovien}}
+            </select>
+        </div> 
+        <div class="mb-3">
+            <label for="lop" class="form-label">niên khóa</label>
+            <select class="form-select" id="lop" name="idnk">
+                <option value="{{lop.idnk}}">{{lop.nienkhoa}}</option>
+                {{#nienkhoa}}
+                <option value="{{this.idnk}}">{{this.ten}}</option>
+                {{/nienkhoa}}
+            </select>
+        </div> 
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
